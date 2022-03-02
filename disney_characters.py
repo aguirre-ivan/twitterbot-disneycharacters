@@ -6,13 +6,14 @@ URL_CHARACTER = 'https://api.disneyapi.dev/characters/'
 
 
 def get_character_info(character_json):
+    name = character_json['name']
     films = character_json['films']
     tvShows = character_json['tvShows']
 
     films = films if len(films) != 0 else ['None']
     tvShows = tvShows if len(tvShows) != 0 else ['None']
 
-    text_info = f"Films: {','.join(films)}\nTV Shows: {','.join(tvShows)}"
+    text_info = f"{name}\n\nFilms: {','.join(films)}\nTV Shows: {','.join(tvShows)}"
 
     return text_info
 
