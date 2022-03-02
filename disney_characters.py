@@ -2,24 +2,39 @@ import requests
 from random import randint
 
 MAX_CHARACTER_ID = 7526
+TWEET_LEN_LIMIT = 280
+
+INVALID_URL_IMAGE = -1
 URL_CHARACTER = 'https://api.disneyapi.dev/characters/'
+
+
+def get_info_in_format(character_json, name_info):
+    info = character_json[name_info]
+    info = info if len(info) != 0 else ['None']
+    return ','.join(info)
 
 
 def get_character_info(character_json):
     name = character_json['name']
-    films = character_json['films']
-    tvShows = character_json['tvShows']
 
-    films = films if len(films) != 0 else ['None']
-    tvShows = tvShows if len(tvShows) != 0 else ['None']
+    films = get_info_in_format(character_json, 'films')
+    tvShows = get_info_in_format(character_json, 'tvShows')
+    videoGames = get_info_in_format(character_json, 'videoGames')
 
-    text_info = f"{name}\n\nFilms: {','.join(films)}\nTV Shows: {','.join(tvShows)}"
+    text_info = f"{name}\n\nFilms: {films}\nTV Shows: {tvShows}"
+
+    videoGamesTitle = 'VideoGames: '
+
+    # Video games are not very relevant
+    # +1 = \n
+    if (len(text_info) + len(videoGames) + len(videoGamesTitle) + 1) <= TWEET_LEN_LIMIT:
+        text_info += f"\n{videoGamesTitle}{videoGames}"
 
     return text_info
 
 
 def get_character_url_image(character_json):
-    return character_json['imageUrl']
+    return character_json.get('imageUrl', INVALID_URL_IMAGE)
 
 
 def get_random_disney_character():
