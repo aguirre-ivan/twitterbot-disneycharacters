@@ -26,8 +26,9 @@ def get_character_info(character_json):
     videoGamesTitle = 'VideoGames: '
 
     # Video games are not very relevant
-    # +1 = \n
-    if (len(text_info) + len(videoGames) + len(videoGamesTitle) + 1) <= TWEET_LEN_LIMIT:
+    has_correct_lenght = (len(text_info) + len(videoGames) + len(videoGamesTitle) + 1) <= TWEET_LEN_LIMIT# +1 = \n
+
+    if videoGames != 'None' and has_correct_lenght:
         text_info += f"\n{videoGamesTitle}{videoGames}"
 
     return text_info
