@@ -5,7 +5,7 @@ from disney_characters import get_random_disney_character, INVALID_URL_IMAGE
 
 IMAGE_NAME = "image.png"
 #WAITING_TIME = 28800 # secs = 8 hours
-WAITING_TIME = 60 # 1 minutos
+WAITING_TIME = 10800 # secs = 3 hours
 
 
 
