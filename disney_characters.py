@@ -29,11 +29,9 @@ def get_random_disney_character():
     character_request = requests.get(url_character)
 
     try:
-        character_request = character_request.json()
+        character_json = character_request.json()
     except:
         return get_random_disney_character()
-
-    character_json = character_request.json()
 
     character_info = get_character_info(character_json)
     character_url_image = get_character_url_image(character_json)
