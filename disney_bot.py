@@ -55,8 +55,6 @@ def create_tweet(bot):
         media = bot.media_upload(IMAGE_NAME)
 
         bot.update_status(character_tweet_text, media_ids=[media.media_id])
-
-        remove_image(IMAGE_NAME)
     else:
         bot.update_status(character_tweet_text)
 
@@ -65,6 +63,12 @@ if __name__ == '__main__':
     bot = twitter_api_setup()
 
     while(True):
-        create_tweet(bot)
+
+        try:
+            create_tweet(bot)
+        except tweepy.TweepyException as err:
+            print(err.args[0])
+        finally:
+            remove_image(IMAGE_NAME)
 
         time.sleep(WAITING_TIME)
