@@ -8,6 +8,7 @@ Set up [credentials.py](/credentials.py) and run [disney_bot.py](/disney_bot.py)
 ```
 python disney_bot.py
 ```
+You can change the tweeting time in [disney_bot.py](/disney_bot.py)
 ## Format tweet
 ```
 "character name"
@@ -25,3 +26,7 @@ Videogames: "character videogames"
 
 - [Twitter](https://developer.twitter.com/en/docs): Read and write Twitter data	
 - [Disney](https://disneyapi.dev/): Information of Disney characters
+
+## Twitterbot status
+
+Offline
