@@ -39,22 +39,26 @@ def twitter_api_setup():
 
 
 def create_tweet(bot):
-    """_summary_
+    """
+    Tweet a random Disney character
 
     Args:
         bot (API access): from twitter_api_setup()
+
+    Returns:
+        None
     """
-    character_info, url_image = get_random_disney_character()
+    character_tweet_text, url_image = get_random_disney_character()
 
     if url_image != INVALID_URL_IMAGE:
         create_image(url_image, IMAGE_NAME)
         media = bot.media_upload(IMAGE_NAME)
 
-        bot.update_status(character_info, media_ids=[media.media_id])
+        bot.update_status(character_tweet_text, media_ids=[media.media_id])
 
         remove_image(IMAGE_NAME)
     else:
-        bot.update_status(character_info)
+        bot.update_status(character_tweet_text)
 
 
 if __name__ == '__main__':
