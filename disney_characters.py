@@ -1,3 +1,4 @@
+from unittest import result
 import requests
 from random import randint
 
@@ -8,30 +9,46 @@ INVALID_URL_IMAGE = -1
 URL_CHARACTER = 'https://api.disneyapi.dev/characters/'
 
 
-def get_info_in_format(character_json, name_info):
-    info = character_json[name_info]
-    info = info if len(info) != 0 else ['None']
-    return ','.join(info)
+def get_info_in_format(title_info, list_info):
+    """
+    Returns 
+
+    Args:
+        title_info (str): _description_
+        list_info (list): _description_
+
+    Returns:
+        str: A text
+    """
+    if not list_info:
+        return ''
+
+    return f"{title_info}: {', '.join(list_info)}\n"
+
+def add_info_to_tweet(total_tweet, info_to_add):
+    result_len = len(total_tweet) + len(info_to_add)
+
+    if result_len <= TWEET_LEN_LIMIT:
+        return total_tweet + info_to_add
+
+    return total_tweet
 
 
-def get_character_info(character_json):
+def get_character_tweet_text(character_json):
     name = character_json['name']
+    tweet_result = f"{name}\n\n"
 
-    films = get_info_in_format(character_json, 'films')
-    tvShows = get_info_in_format(character_json, 'tvShows')
-    videoGames = get_info_in_format(character_json, 'videoGames')
+    films = get_info_in_format("Films", character_json['films'])
+    shortFilms = get_info_in_format("Short films", character_json['shortFilms'])
+    tvShows = get_info_in_format("TV shows", character_json['tvShows'])
+    videoGames = get_info_in_format("Videogames", character_json['videoGames'])
 
-    text_info = f"{name}\n\nFilms: {films}\nTV Shows: {tvShows}"
+    total_info = [films, shortFilms, tvShows, videoGames]
 
-    videoGamesTitle = 'VideoGames: '
+    for info in total_info:
+        tweet_result = add_info_to_tweet(tweet_result, info)
 
-    # Video games are not very relevant
-    has_correct_lenght = (len(text_info) + len(videoGames) + len(videoGamesTitle) + 1) <= TWEET_LEN_LIMIT# +1 = \n
-
-    if videoGames != 'None' and has_correct_lenght:
-        text_info += f"\n{videoGamesTitle}{videoGames}"
-
-    return text_info
+    return tweet_result
 
 
 def get_character_url_image(character_json):
@@ -50,7 +67,7 @@ def get_random_disney_character():
     except:
         return get_random_disney_character()
 
-    character_info = get_character_info(character_json)
+    character_tweet_text = get_character_tweet_text(character_json)
     character_url_image = get_character_url_image(character_json)
 
-    return character_info, character_url_image
+    return character_tweet_text, character_url_image
