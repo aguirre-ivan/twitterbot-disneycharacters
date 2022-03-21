@@ -38,8 +38,6 @@ Videogames: "character videogames"
 "character image"
 ```
 
-Example in [@DisneyCharact](https://twitter.com/DisneyCharact)
-
 ![ExampleTweet](/example.png "Example tweet")
 
 ## Twitterbot status
